@@ -1,0 +1,1 @@
+Demo project for custom AuthenticationProvider instead of calling default DaoAuthenticationProvider
