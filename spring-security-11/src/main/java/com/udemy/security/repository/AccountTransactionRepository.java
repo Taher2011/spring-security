@@ -10,6 +10,6 @@ import com.udemy.security.entity.AccountTransaction;
 @Repository
 public interface AccountTransactionRepository extends JpaRepository<AccountTransaction, String> {
 
-	List<AccountTransaction> findByCustomerIdOrderByTransactionDtDesc(int customerId);
+	List<AccountTransaction> findByCustomerIdOrderByTransactionDateDesc(int customerId);
 
 }
