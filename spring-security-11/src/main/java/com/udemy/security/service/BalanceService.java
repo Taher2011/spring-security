@@ -20,7 +20,7 @@ public class BalanceService {
 
 	public List<AccountTransaction> getBalanceDetails(Integer customerId) {
 		List<AccountTransaction> accountTransactions = accountTransactionsRepository
-				.findByCustomerIdOrderByTransactionDtDesc(customerId);
+				.findByCustomerIdOrderByTransactionDateDesc(customerId);
 		if (ObjectUtils.isNotEmpty(accountTransactions)) {
 			return accountTransactions;
 		}
