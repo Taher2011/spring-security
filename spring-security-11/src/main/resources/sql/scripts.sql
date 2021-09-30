@@ -9,14 +9,8 @@ password VARCHAR(45) NOT NULL,
 enabled INT NOT NULL,
 PRIMARY KEY (id));
 
-CREATE TABLE authorities (
-  id int NOT NULL AUTO_INCREMENT,
-  username varchar(45) NOT NULL,
-  authority varchar(45) NOT NULL,
-  PRIMARY KEY (id));
-
 INSERT IGNORE INTO users VALUES (NULL, 'happy', '12345', '1');
-INSERT IGNORE INTO authorities VALUES (NULL, 'happy', 'write');
+===============================================================================================================================================================
 
 CREATE TABLE customer (
   customer_id int NOT NULL AUTO_INCREMENT,
@@ -31,7 +25,20 @@ CREATE TABLE customer (
 
 INSERT INTO customer (name,email,mobile_number, pwd, role,create_date)
  VALUES ('Taher','taher@gmail.com','9876548337', '$2y$12$oRRbkNfwuR8ug4MlzH5FOeui.//1mkd.RsOAJMbykTSupVy.x/vb2', 'admin',CURDATE());
- 
+===============================================================================================================================================================
+
+CREATE TABLE authorities (
+  id int NOT NULL AUTO_INCREMENT,
+  customer_id int NOT NULL,
+  name varchar(50) NOT NULL,
+  PRIMARY KEY (id),
+  KEY authorities_ibfk_1 (customer_id),
+  CONSTRAINT authorities_ibfk_1 FOREIGN KEY (customer_id) REFERENCES customer (customer_id);
+
+INSERT INTO authorities(1,1,'ROLE_USER');
+INSERT INTO authorities(2,1,'ROLE_ADMIN');
+===============================================================================================================================================================
+
 CREATE TABLE accounts (
   customer_id int NOT NULL,
   account_number int NOT NULL,
@@ -45,7 +52,8 @@ CREATE TABLE accounts (
 
 INSERT INTO accounts (customer_id, account_number, account_type, branch_address, create_date)
  VALUES (1, 1865764, 'Savings', '123 Main Street, New York', CURDATE());
- 
+=============================================================================================================================================================== 
+
 CREATE TABLE account_transactions (
   transaction_id varchar(200) NOT NULL,
   account_number int NOT NULL,
@@ -62,8 +70,6 @@ CREATE TABLE account_transactions (
   CONSTRAINT accounts_ibfk_2 FOREIGN KEY (account_number) REFERENCES accounts (account_number) ON DELETE CASCADE,
   CONSTRAINT acct_user_ibfk_1 FOREIGN KEY (customer_id) REFERENCES customer (customer_id) ON DELETE CASCADE
 );
-
-
  
 INSERT INTO account_transactions (transaction_id, account_number, customer_id, transaction_date, transaction_summary, transaction_type,transaction_amt, 
 closing_balance, create_date)  VALUES (UUID(), 1865764, 1, CURDATE()-7, 'Coffee Shop', 'Withdrawal', 30,34500,CURDATE()-7);
@@ -82,7 +88,7 @@ closing_balance, create_date)  VALUES (UUID(), 1865764, 1, CURDATE()-2, 'OnlineT
 
 INSERT INTO account_transactions (transaction_id, account_number, customer_id, transaction_date, transaction_summary, transaction_type,transaction_amt, 
 closing_balance, create_date)  VALUES (UUID(), 1865764, 1, CURDATE()-1, 'Amazon.com', 'Withdrawal', 100,34900,CURDATE()-1);
-
+===============================================================================================================================================================
 
 CREATE TABLE loans (
   loan_number int NOT NULL AUTO_INCREMENT,
@@ -109,6 +115,7 @@ INSERT INTO loans ( customer_id, start_date, loan_type, total_loan, amount_paid,
 
 INSERT INTO loans ( customer_id, start_date, loan_type, total_loan, amount_paid, outstanding_amount, create_date)
  VALUES ( 1, '2018-02-14', 'Personal', 10000, 3500, 6500, '2018-02-14');
+===============================================================================================================================================================
 
 CREATE TABLE cards (
   card_id int NOT NULL AUTO_INCREMENT,
@@ -132,6 +139,7 @@ INSERT INTO cards (card_number, customer_id, card_type, total_limit, amount_used
  
 INSERT INTO cards (card_number, customer_id, card_type, total_limit, amount_used, available_amount, create_date)
  VALUES ('2359XXXX9346', 1, 'Credit', 20000, 4000, 16000, CURDATE());
+===============================================================================================================================================================
  
 CREATE TABLE notice_details (
   notice_id int NOT NULL AUTO_INCREMENT,
@@ -167,6 +175,7 @@ VALUES ('Launch of Millennia Cards', 'Millennia Credit Cards are launched for th
 INSERT INTO notice_details ( notice_summary, notice_details, notice_begin_date, notice_end_date, create_date, update_date)
 VALUES ('COVID-19 Insurance', 'EazyBank launched an insurance policy which will cover COVID-19 expenses. Please reach out to the branch for more details', 
 '2020-10-14', '2020-12-31', CURDATE(), null);
+===============================================================================================================================================================
 
 CREATE TABLE contact_messages (
   contact_id varchar(50) NOT NULL,
@@ -177,3 +186,4 @@ CREATE TABLE contact_messages (
   create_date date DEFAULT NULL,
   PRIMARY KEY (contact_id)
 );
+===============================================================================================================================================================
