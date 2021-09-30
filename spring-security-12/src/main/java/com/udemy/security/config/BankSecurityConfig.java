@@ -12,9 +12,14 @@ public class BankSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	public void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/account").hasRole("ADMIN").antMatchers("/balance")
-				.hasAnyRole("USER", "ADMIN").antMatchers("/loan").hasRole("ROOT").antMatchers("/card").authenticated()
-				.antMatchers("/notice").permitAll().antMatchers("/contact").permitAll().and().httpBasic();
+		http.authorizeRequests()
+		.antMatchers("/account/*").hasRole("ADMIN")
+		.antMatchers("/balance/*").hasAnyRole("USER", "ADMIN")
+		.antMatchers("/loan/*").hasRole("ROOT")
+		.antMatchers("/card/*").authenticated()
+		.antMatchers("/notice").permitAll()
+		.antMatchers("/contact").permitAll()
+		.and().httpBasic();
 
 	}
 
