@@ -2,6 +2,7 @@ package com.udemy.security.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -41,22 +42,23 @@ public class Customer implements Serializable {
 
 	private String role;
 
-	// bi-directional many-to-one association to Authority
+	// bi-directional one-to-many association to Authority
 	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
 	private List<Authority> authorities;
 
-	public Authority addAuthority(Authority authority) {
-		getAuthorities().add(authority);
-		authority.setCustomer(this);
-
-		return authority;
+	public void addAuthority(Authority authority) {
+		if (authorities == null) {
+			authorities = new ArrayList<>();
+		}
+		authorities.add(authority);
 	}
 
-	public Authority removeAuthority(Authority authority) {
-		getAuthorities().remove(authority);
+	public void removeAuthority(Authority authority) {
+		if (authorities == null) {
+			authorities = new ArrayList<>();
+		}
+		authorities.remove(authority);
 		authority.setCustomer(null);
-
-		return authority;
 	}
 
 }
