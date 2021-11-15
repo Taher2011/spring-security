@@ -13,3 +13,11 @@ PRIMARY KEY (id));
 INSERT INTO bank_spring_security.users
 (id,username,password,enabled)
 VALUES(1,'bank-db','12345',1);
+
+CREATE TABLE authorities (
+username varchar(45) NOT NULL,
+authority varchar(45) NOT NULL
+);
+
+INSERT INTO bank_spring_security.authorities (username,authority)
+VALUES('bank-db','admin');
