@@ -1,5 +1,9 @@
 Demo project for Resource Server
 
-KeyCloak Details
+KeyCloak Details ->
 user:admin
 password:admin
+
+ClientId : bankapi
+
+Realm : dev
